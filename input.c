@@ -6,9 +6,7 @@ int main(int argc, char **argv) {
 
     // Reset current input state
     efi_status_t input_status = ST->ConIn->Reset(ST->ConIn, 0);
-    if(EFI_ERROR(input_status)) {
-        return input_status;
-    }
+    if(EFI_ERROR(input_status)) return input_status;
 
     efi_input_key_t current_key;
 
@@ -22,9 +20,7 @@ int main(int argc, char **argv) {
         input_status = ST->ConIn->ReadKeyStroke(ST->ConIn, &current_key);
 
         // Exit if [ESC] pressed
-        if (current_key.ScanCode == 0x17) {
-            return 0;
-        }
+        if (current_key.ScanCode == 0x17) return 0;
 
         // Sleep prevents cursor blinking and useless CPU usage
         usleep(50 * 1000);
